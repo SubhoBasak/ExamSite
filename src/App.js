@@ -1,24 +1,26 @@
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import { HashRouter, Route } from "react-router-dom";
+import "./App.css";
+import "bootstrap/dist/css/bootstrap.min.css";
+
+// screens
+import Admin from "./screens/Admin";
+import Exam from "./screens/Exam";
+import Login from "./screens/Login";
+import Home from "./screens/Home";
+import StartExam from "./screens/StartExam";
+import Register from "./screens/Register";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <HashRouter>
+      <Route exact path="/" component={Home} />
+      <Route path="/admin" component={Admin} />
+      <Route path="/exam/:exam_id" component={Exam} />
+      <Route path="/login" component={Login} />
+      <Route path="/register" component={Register} />
+      <Route path="/start_exam/:exam_id" component={StartExam} />
+    </HashRouter>
   );
 }
 
