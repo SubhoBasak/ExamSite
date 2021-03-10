@@ -1,5 +1,6 @@
 import React from "react";
 import { Col, Row } from "react-bootstrap";
+import { base_url } from "../../API";
 import "./style.css";
 
 // components
@@ -9,23 +10,12 @@ import ExamCard from "../../components/ExamCard";
 import ReportCard from "../../components/ReportCard";
 
 const Home = () => {
-  // TODO, use api to get available exams
-  const available_exams = [
-    <ExamCard
-      exam_id="1"
-      exam_name="Exam name A"
-      full_marks="10"
-      time="15min"
-    />,
-    <ExamCard
-      exam_id="2"
-      exam_name="Exam name B"
-      full_marks="20"
-      time="35min"
-    />,
-  ];
-
-  const results = [
+  const [load, setLoad] = React.useState(false);
+  const [examIDs, setExamIDs] = React.useState([]);
+  const [completedIDs, setCompletedIDs] = React.useState([]);
+  const [available_exams, setAvailableExams] = React.useState([]);
+  const [completed_exams, setCompletedExams] = React.useState([]);
+  const [result, setResult] = React.useState([
     <Row>
       <Col lg="3" md="3" sm="0"></Col>
       <Col lg="3" md="3" sm="0">
@@ -38,10 +28,58 @@ const Home = () => {
         Marks Obtain
       </Col>
     </Row>,
-    <ReportCard exam_name="Exam name A" correct="7" wrong="3" obtain="7" />,
-    <ReportCard exam_name="Exam name B" correct="7" wrong="3" obtain="7" />,
-    <ReportCard exam_name="Exam name C" correct="7" wrong="3" obtain="7" />,
-  ];
+  ]);
+
+  React.useEffect(() => {
+    if (!load) {
+      // fetch(base_url + "/incomplete/exams", {
+      //   headers: {
+      //     Authorization:
+      //       "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoic3ViaG9AZW1haWwuY29tIiwicGFzc3dvcmQiOiJwYXNzd29yZCJ9LCJpYXQiOjE2MTUyNzI1MjR9.V0IXVRYm7-KuhSzp3TRsBZ76oyHjs-kUvaRntWgJZ0c",
+      //   },
+      // })
+      //   .then((data) => data.json())
+      //   .then((json) => setExamIDs(json["examIDs"]["incompleteExam"]));
+
+      // examIDs.map((data) => {
+      //   fetch(base_url + "/incomplete/exam?", {
+      //     params: {
+      //       id: data,
+      //     },
+      //     headers: {
+      //       Authorization:
+      //         "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoic3ViaG9AZW1haWwuY29tIiwicGFzc3dvcmQiOiJwYXNzd29yZCJ9LCJpYXQiOjE2MTUyNzI1MjR9.V0IXVRYm7-KuhSzp3TRsBZ76oyHjs-kUvaRntWgJZ0c",
+      //     },
+      //   })
+      //     .then((data) => data.json())
+      //     .then((json) =>
+      //       setAvailableExams(
+      //         available_exams.concat(
+      //           <ExamCard exam_id="" exam_name="" full_marks="" time="" />
+      //         )
+      //       )
+      //     );
+      // });
+
+      fetch(base_url + "/completed/exams", {
+        headers: {
+          Authorization:
+            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoic3ViaG9AZW1haWwuY29tIiwicGFzc3dvcmQiOiJwYXNzd29yZCJ9LCJpYXQiOjE2MTUyNzI1MjR9.V0IXVRYm7-KuhSzp3TRsBZ76oyHjs-kUvaRntWgJZ0c",
+        },
+      })
+        .then((data) => data.json())
+        .then((json) => setCompletedIDs(json.examIDs.completedExam));
+      console.log(completedIDs);
+      setCompletedExams(
+        completed_exams.concat(
+          completedIDs.map((data, index) => (
+            <ReportCard key={index} exam_name={data.title} />
+          ))
+        )
+      );
+      setLoad(true);
+    }
+  }, []);
 
   return (
     <div style={{ width: "98%" }}>
@@ -55,9 +93,10 @@ const Home = () => {
             department="CSE"
           />
         </Col>
+        {console.log("hello" + completedIDs)}
         <Col className="dashboard" lg="9" md="8" sm="12">
           <Container header="Available Exams" body={available_exams} />
-          <Container header="Results" body={results} />
+          <Container header="Results" body={completed_exams} />
         </Col>
       </Row>
     </div>
