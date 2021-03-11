@@ -51,7 +51,13 @@ const Home = () => {
           <Container key="cnt-0" header="Available Exams">
             {profile.incompleteExam &&
               profile.incompleteExam.map((data, index) => (
-                <ExamCard key={"aval_exam_" + index} exam_name={data.title} />
+                <ExamCard
+                  key={"aval_exam_" + index}
+                  exam_name={data.title}
+                  exam_id={data.exam}
+                  full_marks="10"
+                  time="15 Min"
+                />
               ))}
             {console.log(profile)}
           </Container>
@@ -65,15 +71,19 @@ const Home = () => {
                 Wrong
               </Col>
               <Col lg="3" md="3" sm="0">
-                Marks Obtain
+                Full Marks
               </Col>
             </Row>
 
-            {profile.completedExam &&
-              profile.completedExam.map((data, index) => (
+            {profile.scores &&
+              profile.scores.map((data, index) => (
                 <ReportCard
                   key={"report_card_" + index}
                   exam_name={data.title}
+                  exam_id={data.exam}
+                  correct={data.score}
+                  wrong={data.fullMask - data.score}
+                  obtain={data.fullMask}
                 />
               ))}
           </Container>

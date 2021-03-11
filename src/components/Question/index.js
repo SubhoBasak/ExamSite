@@ -32,8 +32,11 @@ const Question = (props) => {
     }
   };
 
-  const give_answer = (option) => {
-    props.answers[props.currentQuestion] = option;
+  const give_answer = (option_no) => {
+    props.answers[props.currentQuestion] = {
+      answer: option_no,
+      _id: props.question_id,
+    };
     props.seenStatus[props.currentQuestion] = 2;
   };
 
@@ -44,11 +47,11 @@ const Question = (props) => {
         <Col className="m-3" lg="5" md="5" sm="11">
           <Button
             variant={
-              props.answers[props.currentQuestion] === 0
+              props.answers[props.currentQuestion].answer === "a"
                 ? "primary"
                 : "outline-primary"
             }
-            onClick={() => give_answer(0)}
+            onClick={() => give_answer("a")}
           >
             {props.option_a}
           </Button>
@@ -56,11 +59,11 @@ const Question = (props) => {
         <Col className="m-3" lg="5" md="5" sm="11">
           <Button
             variant={
-              props.answers[props.currentQuestion] === 1
+              props.answers[props.currentQuestion].answer === "b"
                 ? "primary"
                 : "outline-primary"
             }
-            onClick={() => give_answer(1)}
+            onClick={() => give_answer("b")}
           >
             {props.option_b}
           </Button>
@@ -68,11 +71,11 @@ const Question = (props) => {
         <Col className="m-3" lg="5" md="5" sm="11">
           <Button
             variant={
-              props.answers[props.currentQuestion] === 2
+              props.answers[props.currentQuestion].answer === "c"
                 ? "primary"
                 : "outline-primary"
             }
-            onClick={() => give_answer(2)}
+            onClick={() => give_answer("c")}
           >
             {props.option_c}
           </Button>
@@ -80,11 +83,11 @@ const Question = (props) => {
         <Col className="m-3" lg="5" md="5" sm="11">
           <Button
             variant={
-              props.answers[props.currentQuestion] === 3
+              props.answers[props.currentQuestion].answer === "d"
                 ? "primary"
                 : "outline-primary"
             }
-            onClick={() => give_answer(3)}
+            onClick={() => give_answer("d")}
           >
             {props.option_d}
           </Button>

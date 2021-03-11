@@ -15,7 +15,7 @@ const QuestionNav = (props) => {
     props.setCurrentQuestion(index);
   };
 
-  const cards = props.all_question.map((data, index) => {
+  const cards = props.all_question.quizs.map((data, index) => {
     if (props.seenStatus[index] === 0) {
       return (
         <Button
