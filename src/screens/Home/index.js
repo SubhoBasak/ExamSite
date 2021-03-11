@@ -24,7 +24,10 @@ const Home = () => {
         },
       })
         .then((data) => data.json())
-        .then((json) => setProfile(json));
+        .then((json) => {
+          console.log(json);
+          setProfile(json);
+        });
       setLoad(true);
     }
   }, []);
@@ -32,16 +35,6 @@ const Home = () => {
   if (!localStorage.getItem("token")) {
     history.push("/login");
   }
-
-  // const load_inc_exam = () => {};
-
-  // const load_cmp_exam = () => {
-  //   if (profile.completedExam) {
-  //     return;
-  //   } else {
-  //     return [];
-  //   }
-  // };
 
   return (
     <div style={{ width: "98%" }}>
@@ -56,8 +49,8 @@ const Home = () => {
         </Col>
         <Col className="dashboard" lg="9" md="8" sm="12">
           <Container key="cnt-0" header="Available Exams">
-            {profile.incompletedExam &&
-              profile.incompletedExam.map((data, index) => {
+            {profile.incompleteExam &&
+              profile.incompleteExam.map((data, index) => {
                 <ExamCard key={"aval_exam_" + index} exam_name={data.title} />;
               })}
           </Container>
