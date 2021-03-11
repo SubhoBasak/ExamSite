@@ -1,6 +1,7 @@
 import React from "react";
-import { Row, Col, Button } from "react-bootstrap";
+import { Row, Col } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
+import { base_url } from "../../API";
 import "./style.css";
 
 // components
@@ -8,7 +9,8 @@ import Question from "../../components/Question";
 import QuestionNav from "../../components/QuestionNav";
 
 const Exam = () => {
-  const [loaded, setLoaded] = React.useState(true);
+  const [loaded, setLoaded] = React.useState(false);
+  const [all_question, setAllQuestion] = React.useState([]);
   const [currentQuestion, setCurrentQuestion] = React.useState(0);
   const [seenStatus, setSeenStatus] = React.useState([1, 0, 0]);
   const [totalQuestion, setTotalQuestion] = React.useState(3);
@@ -17,21 +19,19 @@ const Exam = () => {
 
   const history = useHistory();
 
-  // TODO, use api
-  const all_question = [
-    {
-      question: "This is question A.",
-      options: ["Option A", "Option B", "Option C", "Option D"],
-    },
-    {
-      question: "This is question B.",
-      options: ["Option A", "Option B", "Option C", "Option D"],
-    },
-    {
-      question: "This is question C.",
-      options: ["Option A", "Option B", "Option C", "Option D"],
-    },
-  ];
+  if (!localStorage.getItem("token")) {
+    history.push("/login");
+  }
+
+  React.useEffect(() => {
+    fetch(base_url + "", {
+      headers: {
+        params: {
+          Authorization: localStorage.getItem("token"),
+        },
+      },
+    });
+  });
 
   setTimeout(() => {
     if (time === 0) {
@@ -41,8 +41,15 @@ const Exam = () => {
     }
   }, 999);
 
+  const submit_answer = () => {
+    console.log("answer submitted");
+  };
+
   const loading_screen = (
-    <div className="d-flex justify-content-center align-item-center">
+    <div
+      className="d-flex justify-content-center align-item-center"
+      style={{ height: "100vh" }}
+    >
       <h1>Loading...</h1>
     </div>
   );
@@ -61,11 +68,11 @@ const Exam = () => {
       </Col>
       <Col lg="9" md="9" sm="12">
         <Question
-          question={all_question[currentQuestion].question}
-          option_a={all_question[currentQuestion].options[0]}
-          option_b={all_question[currentQuestion].options[1]}
-          option_c={all_question[currentQuestion].options[2]}
-          option_d={all_question[currentQuestion].options[3]}
+          // question={all_question[currentQuestion].question}
+          // option_a={all_question[currentQuestion].options[0].a}
+          // option_b={all_question[currentQuestion].options[0].b}
+          // option_c={all_question[currentQuestion].options[0].c}
+          // option_d={all_question[currentQuestion].options[0].d}
           currentQuestion={currentQuestion}
           setCurrentQuestion={setCurrentQuestion}
           seenStatus={seenStatus}
@@ -73,6 +80,7 @@ const Exam = () => {
           totalQuestion={totalQuestion}
           answers={answers}
           setAnswer={setAnswer}
+          submit_answer={submit_answer}
         />
       </Col>
     </Row>

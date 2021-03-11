@@ -94,7 +94,9 @@ const Question = (props) => {
         <Button variant="success" onClick={goto_prev}>
           Previous
         </Button>
-        <Button variant="danger">Submit</Button>
+        <Button variant="danger" onClick={props.submit_answer}>
+          Submit
+        </Button>
         <Button variant="success" onClick={goto_next}>
           Next
         </Button>
