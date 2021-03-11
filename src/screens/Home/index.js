@@ -50,33 +50,32 @@ const Home = () => {
         <Col className="dashboard" lg="9" md="8" sm="12">
           <Container key="cnt-0" header="Available Exams">
             {profile.incompleteExam &&
-              profile.incompleteExam.map((data, index) => {
-                <ExamCard key={"aval_exam_" + index} exam_name={data.title} />;
-              })}
+              profile.incompleteExam.map((data, index) => (
+                <ExamCard key={"aval_exam_" + index} exam_name={data.title} />
+              ))}
+            {console.log(profile)}
           </Container>
           <Container key="cnt-1" header="Results">
-            {[
-              <Row>
-                <Col lg="3" md="3" sm="0"></Col>
-                <Col lg="3" md="3" sm="0">
-                  Correct
-                </Col>
-                <Col lg="3" md="3" sm="0">
-                  Wrong
-                </Col>
-                <Col lg="3" md="3" sm="0">
-                  Marks Obtain
-                </Col>
-              </Row>,
-            ].concat(
-              profile.completedExam &&
-                profile.completedExam.map((data, index) => (
-                  <ReportCard
-                    key={"report_card_" + index}
-                    exam_name={data.title}
-                  />
-                ))
-            )}
+            <Row>
+              <Col lg="3" md="3" sm="0"></Col>
+              <Col lg="3" md="3" sm="0">
+                Correct
+              </Col>
+              <Col lg="3" md="3" sm="0">
+                Wrong
+              </Col>
+              <Col lg="3" md="3" sm="0">
+                Marks Obtain
+              </Col>
+            </Row>
+
+            {profile.completedExam &&
+              profile.completedExam.map((data, index) => (
+                <ReportCard
+                  key={"report_card_" + index}
+                  exam_name={data.title}
+                />
+              ))}
           </Container>
         </Col>
       </Row>
