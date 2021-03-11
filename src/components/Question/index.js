@@ -15,9 +15,6 @@ const Question = (props) => {
       }
       props.setCurrentQuestion(prev);
     }
-    console.log(props.currentQuestion);
-    console.log("Seen : " + props.seenStatus);
-    console.log("Answers : " + props.answers);
   };
 
   const goto_next = () => {
@@ -33,17 +30,11 @@ const Question = (props) => {
       }
       props.setCurrentQuestion(next);
     }
-    console.log(props.currentQuestion);
-    console.log("Seen : " + props.seenStatus);
-    console.log("Answers : " + props.answers);
   };
 
   const give_answer = (option) => {
     props.answers[props.currentQuestion] = option;
     props.seenStatus[props.currentQuestion] = 2;
-    console.log(props.currentQuestion);
-    console.log("Seen : " + props.seenStatus);
-    console.log("Answers : " + props.answers);
   };
 
   return (
@@ -103,6 +94,7 @@ const Question = (props) => {
         <Button variant="success" onClick={goto_prev}>
           Previous
         </Button>
+        <Button variant="danger">Submit</Button>
         <Button variant="success" onClick={goto_next}>
           Next
         </Button>

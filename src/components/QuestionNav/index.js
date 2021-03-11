@@ -13,8 +13,6 @@ const QuestionNav = (props) => {
       );
     }
     props.setCurrentQuestion(index);
-    console.log("Seen : " + props.seenStatus);
-    console.log("Answers : " + props.answers);
   };
 
   const cards = props.all_question.map((data, index) => {
@@ -68,7 +66,7 @@ const QuestionNav = (props) => {
         </ul>
       </div>
       <h3 className="w-100 text-center text-warning mt-5">
-        {props.time} Sec left
+        {Number.parseInt(props.time / 60)} Min {props.time % 60} Sec left
       </h3>
     </div>
   );
